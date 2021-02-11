@@ -9,8 +9,16 @@ public class Reader {
 
   public static SimpleDateFormat logFormat = new SimpleDateFormat("yyyy-MM-dd'Т'kk:mm:ss.SSS'Z'");
   public static SimpleDateFormat argFormat = new SimpleDateFormat("yyyy-MM-dd'Т'kk:mm:ss");
+  public static final String USAGE = "To start the program, you need to pass 3 arguments:\n" +
+      "- the absolute path of the file;\n" +
+      "- start date in the format \" yyyy-MM-dd'T'kk: mm:ss\";\n" +
+      "- the end date of the work in the format \"yyyy-MM-dd't'kk: mm:ss\".";
 
   public static void main(String[] args) throws ParseException {
+    if (args.length!=3){
+      System.out.println(USAGE);
+    }
+
     Date dateFrom = argFormat.parse(args[1]);
     Date dateTo = argFormat.parse(args[2]);
 
