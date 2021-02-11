@@ -1,3 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class WaterBoy {
 
   public int startWaterVolume;
@@ -58,6 +62,19 @@ public class WaterBoy {
   }
 
   public void pringReport() {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("result.csv"))) {
+      writer.write("Вопрос,Ответ\n");
+      writer.write("Попыток налить воду в бочку," + receiveCount+"\n");
+      writer.write(String.format("Процент ошибок при наполнении,%.2f%%%n", receiveErrorPercent()));
+      writer.write("Наполненный объем воды за указанный период," + waterReceive+"\n");
+      writer.write("Ненаполненный объем воды за указанный период," + noWaterReceive+"\n");
+      writer.write("Попыток зачерпнуть воду из бочки," + giveCount+"\n");
+      writer.write(String.format("Процент ошибок при зачерпывании,%.2f%%%n", giveErrorPercent()));
+      writer.write("Вычерпаный объем воды за указанный период," + waterGive+"\n");
+      writer.write("Невычерпаный объем воды за указанный период," + noWaterGive);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     System.out.println("Попыток налить воду в бочку: " + receiveCount);
     System.out.printf("Процент ошибок при наполнении: %.2f%%%n", receiveErrorPercent());
     System.out.println("Наполненный объем воды за указанный период: " + waterReceive);
