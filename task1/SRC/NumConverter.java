@@ -7,6 +7,15 @@
 
 public class NumConverter {
 
+  public static final String USAGE =
+      "To convert from the decimal system, you need to enter 2 lines in the console:\n" +
+          "- the number to convert (consisting of digits);\n" +
+          "- dictionary of total characters.\n" +
+          "To convert from non-decimal notation, you need to enter 3 lines in the console:\n" +
+          "- the number to convert (consisting of numbers and Latin characters);\n" +
+          "- dictionary of source characters;\n" +
+          "- dictionary of total characters.";
+
   /**
    * To convert from the decimal system, you need to enter 2 lines in the console:
    * - the number to convert (consisting of digits);
@@ -25,19 +34,10 @@ public class NumConverter {
       } else {
         System.out.println(USAGE);
       }
-    } catch (Exception e){
+    } catch (Exception e) {
       System.out.println(USAGE);
     }
   }
-
-  public static final String USAGE =
-      "To convert from the decimal system, you need to enter 2 lines in the console:\n" +
-          "- the number to convert (consisting of digits);\n" +
-          "- dictionary of total characters.\n" +
-          "To convert from non-decimal notation, you need to enter 3 lines in the console:\n" +
-          "- the number to convert (consisting of numbers and Latin characters);\n" +
-          "- dictionary of source characters;\n" +
-          "- dictionary of total characters.";
 
   /**
    * Accepts a number in the decimal system and returns the number in the number system passed
@@ -73,8 +73,8 @@ public class NumConverter {
    * Accepts a string with number in base number system and returns the number
    * in the decimal system.
    *
-   * @param number      line with number in base number system
-   * @param base        number system of the number
+   * @param number line with number in base number system
+   * @param base   number system of the number
    */
   private static String convertToDec(String number, String base) {
     int result = 0;
