@@ -8,15 +8,15 @@ public class Waterpot {
     this.waterVolume = waterVolume;
   }
 
-  public int freeVolume(){
+  public int freeVolume() {
     return totalVolume - waterVolume;
   }
 
-  public void fill (int water){
+  public void fill(int water) {
     waterVolume += water;
   }
 
-  public void pickUp(int water){
+  public void pickUp(int water) {
     waterVolume -= water;
   }
 

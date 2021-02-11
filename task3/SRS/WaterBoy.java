@@ -17,47 +17,47 @@ public class WaterBoy {
     startWaterVolume = volume;
   }
 
-  public void topUp(int water){
-    if(isEnoughVolumeForTopUp(water)){
+  public void topUp(int water) {
+    if (isEnoughVolumeForTopUp(water)) {
       waterpot.fill(water);
-      waterReceive +=water;
+      waterReceive += water;
       receiveCount++;
-    } else{
+    } else {
       noWaterReceive += water;
       failedReceiveCount++;
     }
   }
 
-  public void scoop(int water){
-    if(isEnoughVolumeForScoop(water)){
+  public void scoop(int water) {
+    if (isEnoughVolumeForScoop(water)) {
       waterpot.pickUp(water);
       waterGive += water;
       giveCount++;
-    } else{
+    } else {
       noWaterGive += water;
       failedGiveCount++;
     }
   }
 
-  private boolean isEnoughVolumeForTopUp(int water){
-    return waterpot.freeVolume()>water;
+  private boolean isEnoughVolumeForTopUp(int water) {
+    return waterpot.freeVolume() > water;
   }
 
-  private boolean isEnoughVolumeForScoop(int water){
+  private boolean isEnoughVolumeForScoop(int water) {
     return waterpot.waterVolume > water;
   }
 
-  private double receiveErrorPercent(){
-    tempPerc =  (float) failedReceiveCount/ (float) receiveCount*100;
+  private double receiveErrorPercent() {
+    tempPerc = (float) failedReceiveCount / (float) receiveCount * 100;
     return tempPerc;
   }
 
-  private double giveErrorPercent(){
-    tempPerc = (float) failedGiveCount/ (float) giveCount *100;
+  private double giveErrorPercent() {
+    tempPerc = (float) failedGiveCount / (float) giveCount * 100;
     return tempPerc;
   }
 
-  public void pringReport(){
+  public void pringReport() {
     System.out.println("Попыток налить воду в бочку: " + receiveCount);
     System.out.printf("Процент ошибок при наполнении: %.2f%%%n", receiveErrorPercent());
     System.out.println("Наполненный объем воды за указанный период: " + waterReceive);
