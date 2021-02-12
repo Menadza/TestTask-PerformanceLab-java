@@ -5,30 +5,47 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * This class inspects the .log file, analyzes the strings, and outputs statistical information.
+ *
+ * @author Denis Kondratev
+ */
 public class Reader {
+  private final Date dateFrom;
+  private final Date dateTo;
+  private final String filePath;
+  SimpleDateFormat logFormat = new SimpleDateFormat("yyyy-MM-dd'Т'kk:mm:ss.SSS'Z'");
+  SimpleDateFormat argFormat = new SimpleDateFormat("yyyy-MM-dd'Т'kk:mm:ss");
+  private WaterBoy vodonos;
 
-  public static SimpleDateFormat logFormat = new SimpleDateFormat("yyyy-MM-dd'Т'kk:mm:ss.SSS'Z'");
-  public static SimpleDateFormat argFormat = new SimpleDateFormat("yyyy-MM-dd'Т'kk:mm:ss");
-  public static final String USAGE = "To start the program, you need to pass 3 arguments:\n" +
-      "- the absolute path of the file;\n" +
-      "- start date in the format \" yyyy-MM-dd'T'kk: mm:ss\";\n" +
-      "- the end date of the work in the format \"yyyy-MM-dd't'kk: mm:ss\".";
+  /**
+   * Constructs Reader with start-end dates and path to file to read.
+   *
+   * @param dateFrom start work date
+   * @param dateTo   end work date
+   * @param filePath absolute path to the file to read
+   * @throws ParseException if <code>dateTo</code> or <code>dateFrom</code> is wrong
+   */
+  public Reader(String dateFrom, String dateTo, String filePath) throws ParseException {
+    this.dateFrom = argFormat.parse(dateFrom);
+    this.dateTo = argFormat.parse(dateTo);
+    this.filePath = filePath;
+  }
 
-  public static void main(String[] args) throws ParseException {
-    if (args.length!=3){
-      System.out.println(USAGE);
-    }
-
-    Date dateFrom = argFormat.parse(args[1]);
-    Date dateTo = argFormat.parse(args[2]);
-
-    Date workDate;
-    String line;
-
-    try (BufferedReader reader = new BufferedReader(new FileReader(args[0]))) {
+  /**
+   * Reads the. log file, based on the inspection of the lines, issues a report - to the command
+   * line and to the created result.csv file.
+   *
+   * @throws ParseException if <code>dateTo</code> or <code>dateFrom</code> is wrong
+   * @throws if             the transferred file is not found by the BufferedReader
+   */
+  public void expectFile() {
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       reader.readLine();
       WaterBoy vodonos = new WaterBoy(Integer.parseInt(reader.readLine()),
           Integer.parseInt(reader.readLine()));
+      String line;
+      Date workDate;
       while ((line = reader.readLine()) != null) {
         workDate = logFormat.parse(line.substring(0, line.indexOf('Z') + 1));
         if (workDate.after(dateFrom) && workDate.before(dateTo)) {
@@ -41,9 +58,10 @@ public class Reader {
         }
       }
       vodonos.pringReport();
-    } catch (IOException e) {
+    } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
   }
+
 
 }
